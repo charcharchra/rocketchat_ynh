@@ -121,8 +121,8 @@ ynh_mongo_exec --database="$db_name" --command='db.rocketchat_settings.update({"
 ynh_script_progression --message="Starting a MongoDB service..." --weight=2
 
 # Start a mongod service
-ynh_exec_warn_less systemctl enable $mongodb_servicename --quiet
-ynh_systemd_action --service_name=$mongodb_servicename --action=restart
+ynh_exec_warn_less systemctl enable mongod --quiet
+ynh_systemd_action --service_name=mongod --action=restart
 
 #=================================================
 # GENERIC FINALISATION
