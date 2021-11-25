@@ -111,9 +111,7 @@ fi
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 new_url="https://${new_domain}${new_path}"
-ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__DOMAIN____PATH__" --replace_string="${new_url}'" --target_file="../conf/systemd.service"
-ynh_add_systemd_config
+sed -i '18s/.*/Environment=ROOT_URL=${new_url}/' /etc/systemd/system/$app.service
 
 ynh_mongo_exec --database="$db_name" --command='db.rocketchat_settings.update({"_id" : "Site_Url"}, {$set: {value: "'${new_url}'"}});'
 
