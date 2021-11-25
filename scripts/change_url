@@ -111,7 +111,7 @@ fi
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 new_url="https://${new_domain}${new_path}"
-sed -i '18s/.*/Environment=ROOT_URL=${new_url}/' /etc/systemd/system/$app.service
+sed -i '18s/.*/Environment=ROOT_URL="$new_url"/' /etc/systemd/system/$app.service
 
 ynh_mongo_exec --database="$db_name" --command='db.rocketchat_settings.update({"_id" : "Site_Url"}, {$set: {value: "'${new_url}'"}});'
 
@@ -132,6 +132,7 @@ ynh_systemd_action --service_name=mongod --action=restart
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="start" --log_path=systemd
+sleep 60
 
 #=================================================
 # RELOAD NGINX
