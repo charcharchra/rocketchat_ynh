@@ -1,7 +1,7 @@
 [Unit]
 Description=The Rocket.Chat server
-Wants=__MONGODB_SERVICENAME__.service
-After=network.target remote-fs.target nss-lookup.target nginx.service __MONGODB_SERVICENAME__.service
+Wants=mongod.service
+After=network.target remote-fs.target nss-lookup.target nginx.service mongod.service
 
 [Service]
 User=__APP__
